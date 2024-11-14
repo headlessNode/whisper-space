@@ -4,4 +4,10 @@
             <li class="text-red-600"><%= error.msg %></li>
         <% }) %>
     </ul>
+<% } else if(locals.sessionErrors) { %>
+    <ul class="list-disc list-inside">
+        <% locals.sessionErrors.forEach((error) => { %>
+            <li class="text-red-600"><%= error %></li>
+        <% }) %>
+    </ul>
 <% } %>

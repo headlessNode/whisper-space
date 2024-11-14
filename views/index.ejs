@@ -9,7 +9,17 @@
     <body>
         <wrapper class="w-full flex flex-col items-center">
             <%- include('partials/header') %>
-            <main>
+            <main class="w-full max-w-7xl px-4">
+                <div class="py-20 flex flex-col items-center justify-center">
+                    <% if(locals.user) {%>
+                        <h1 class="text-4xl font-semibold">Welcome, <%= locals.user.first_name %></h1>
+                        <p class="text-2xl text-gray-800">You are logged in.</p>
+                        <a href="/logout" class="mt-5 cursor-pointer p-2 rounded-md bg-black text-white hover:bg-black/80">Logout</a>
+                    <% } else {%>
+                        <h1 class="text-4xl font-semibold">Welcome to WhisperSpace</h1>
+                        <p class="text-2xl text-gray-800">Please log in to continue.</p>
+                    <% } %>
+                </div>
             </main>
         </wrapper>
     </body>

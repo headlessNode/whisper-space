@@ -2,7 +2,6 @@ const {body, validationResult} = require('express-validator');
 const db = require('../db/query.js');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
-const customErrors = require('../errors/CustomErrors.js');
 
 // VALIDATIONS //
 
@@ -11,9 +10,9 @@ const validateUsername = [
     body('username').custom(async (value) => {
         const count = await db.filterUsername(value);
         if (count > 0) {
-            Promise.reject();
+            return Promise.reject();
         };
-        Promise.resolve();
+        return Promise.resolve();
     }).withMessage('Username already exists')
 ];
 
@@ -27,10 +26,10 @@ const validatePassword = [
         .withMessage('Password must contain at least one number'),
     body('password').custom((value, { req }) => {
         if (value !== req.body.verify_password) {
-            throw new Error('Passwords do not match');
+            return Promise.reject();
         }
-        return true;
-    })
+        return Promise.resolve();
+    }).withMessage('Passwords do not match')
 ];
 
 
