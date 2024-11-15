@@ -10,16 +10,19 @@
         <wrapper class="w-full flex flex-col items-center">
             <%- include('partials/header') %>
             <main class="px-4 py-20 w-full max-w-7xl flex flex-col items-center justify-center">
-                <div class="border border-black px-8 pt-12 pb-6 rounded-md flex flex-col w-full max-w-[400px]">
-                    <form action="/login" method="post" class="w-full max-w-[400px] flex flex-col gap-6">
-                        <input class="p-2 rounded-md border border-gray-300" type="text" id="username" name="username" placeholder="Username">
-                        <input class="p-2 rounded-md border border-gray-300" type="password" id="password" name="password" placeholder="Password">
-                        <input type="submit" class="mt-5 cursor-pointer p-2 rounded-md bg-black text-white hover:bg-black/80" value="Login">
-                    </form>
-                    <div class="errors pt-6">
-                        <%- include('partials/authErrors') %>
-                    </div>
-                </div>
+                <% if (locals.user && locals.isAuthenticated) { %>
+                    <%- include('partials/alreadyLoggedIn') %>
+                <% } else { %>
+                    <div class="border border-black px-8 pt-12 pb-6 rounded-md flex flex-col w-full max-w-[400px]">
+                        <form action="/login" method="post" class="w-full max-w-[400px] flex flex-col gap-6">
+                            <input class="p-2 rounded-md border border-gray-300" type="text" id="username" name="username" placeholder="Username">
+                            <input class="p-2 rounded-md border border-gray-300" type="password" id="password" name="password" placeholder="Password">
+                            <input type="submit" class="mt-5 cursor-pointer p-2 rounded-md bg-black text-white hover:bg-black/80" value="Login">
+                        </form>
+                        <div class="errors pt-6">
+                            <%- include('partials/authErrors') %>
+                        </div>
+                <% } %>
             </main>
         </wrapper>
     </body>
