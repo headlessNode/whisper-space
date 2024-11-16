@@ -8,8 +8,7 @@
     </head>
     <body>
         <wrapper class="w-full flex flex-col items-center">
-            <%- include('partials/header') %>
-            <main class="py-32 px-4">
+            <main class="mt-64 px-4">
                 <div class="bg-red-100 border border-red-500 p-6 rounded-md shadow-lg flex gap-6 items-center">
                     <div class="flex-shrink-0 bg-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl">
                         X
@@ -19,6 +18,7 @@
                         <p class="text-lg text-gray-800">
                             <%= err.message %>
                         </p>
+                        <a href="/" class="text-blue-600 hover:underline hover:text-gray-600">Go to Homepage</a>
                     </div>
                 </div>
             </main>

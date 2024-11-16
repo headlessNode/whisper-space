@@ -44,9 +44,14 @@ const findUserById = asyncHandler(async (id) => {
     return rows[0];
 });
 
+const getPosts = asyncHandler(async (isMember) => {
+    console.log(isMember);
+});
+
 module.exports = {
     filterUsername,
     registerUser,
     findUser,
-    findUserById
+    findUserById,
+    getPosts
 };

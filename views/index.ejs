@@ -10,15 +10,14 @@
         <wrapper class="w-full flex flex-col items-center">
             <%- include('partials/header') %>
             <main class="w-full max-w-7xl px-4">
-                <div class="py-20 flex flex-col items-center justify-center">
-                    <% if(locals.user) {%>
-                        <h1 class="text-4xl font-semibold">Welcome, <%= locals.user.first_name %></h1>
+                <div class="py-20 flex flex-col items-center gap-4">
+                        <h1 class="text-4xl font-semibold">Welcome, <%= locals.user.first_name %> <%= locals.user.last_name %></h1>
                         <p class="text-2xl text-gray-800">You are logged in.</p>
-                        <a href="/logout" class="mt-5 cursor-pointer p-2 rounded-md bg-black text-white hover:bg-black/80">Logout</a>
-                    <% } else {%>
-                        <h1 class="text-4xl font-semibold">Welcome to WhisperSpace</h1>
-                        <p class="text-2xl text-gray-800">Please log in to continue.</p>
-                    <% } %>
+                        <form action="/logout" method="post">
+                            <button type="submit" class="w-full text-left px-4 py-2 bg-black text-white rounded-md hover:bg-black/80">
+                                Logout
+                            </button>
+                        </form>
                 </div>
             </main>
         </wrapper>
