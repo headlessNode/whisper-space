@@ -13,6 +13,12 @@
                 <% if (locals.user && locals.isAuthenticated) { %>
                     <%- include('partials/alreadyLoggedIn') %>
                 <% } else { %>
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-bold mb-4">Welcome Back</h1>
+                        <p class="text-gray-600 max-w-md mx-auto">
+                            Log in to your WhisperSpace account to continue sharing and connecting with the community.
+                        </p>
+                    </div>
                     <div class="border border-black px-8 pt-12 pb-6 rounded-md flex flex-col w-full max-w-[400px]">
                         <form action="/login" method="post" class="w-full max-w-[400px] flex flex-col gap-6">
                             <input class="p-2 rounded-md border border-gray-300" type="text" id="username" name="username" placeholder="Username">
@@ -22,6 +28,10 @@
                         <div class="errors pt-6">
                             <%- include('partials/authErrors') %>
                         </div>
+                    </div>
+                    <p class="mt-6 text-gray-600">
+                        New to WhisperSpace? <a href="/register" class="text-black hover:underline">Create an account</a>
+                    </p>
                 <% } %>
             </main>
         </wrapper>
