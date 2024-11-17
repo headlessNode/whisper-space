@@ -84,7 +84,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
-app.use('/create-post', postRouter);
+app.use('/post', postRouter);
 app.post('/logout', (req, res) => {
     req.logOut((err) => {
         if (err) {

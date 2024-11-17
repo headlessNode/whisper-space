@@ -51,9 +51,28 @@ const getPosts = asyncHandler(async () => {
     return rows;
 });
 
+const getPostById = asyncHandler(async (id) => {
+    const {rows} = await pool.query(
+        'SELECT * FROM posts WHERE id = $1', [id]
+    );
+    return rows[0];
+});
+
 const createPost = asyncHandler(async (title, content, userId) => {
     await pool.query(
         'INSERT INTO posts (title, content, user_id) VALUES ($1, $2, $3)', [title, content, userId]
+    );
+});
+
+const deletePost = asyncHandler(async (id) => {
+    await pool.query(
+        'DELETE FROM posts WHERE id = $1', [id]
+    );
+});
+
+const editPost = asyncHandler(async (id, title, content) => {
+    await pool.query(
+        'UPDATE posts SET title = $1, content = $2 WHERE id = $3', [title, content, id]
     );
 });
 
@@ -63,5 +82,8 @@ module.exports = {
     findUser,
     findUserById,
     getPosts,
-    createPost
+    getPostById,
+    createPost,
+    editPost,
+    deletePost
 };

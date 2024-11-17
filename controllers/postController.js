@@ -29,6 +29,15 @@ const postController = {
         res.render('createPost', {user});
     }),
 
+    renderEditForm: asyncHandler(async (req, res) => {
+        const postId = req.params.id;
+        const user = {
+            ...res.locals.currentUser
+        };
+        const post = await db.getPostById(postId);
+        res.render('editPost', {user, post});
+    }),
+
     createPost: [
         validateTitle,
         validateContent,
@@ -47,6 +56,32 @@ const postController = {
             }
         })
     ],
+
+    editPost: [
+        validateTitle,
+        validateContent,
+        asyncHandler(async (req, res) => {
+            const postId = req.params.id;
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                const user = {
+                    ...res.locals.currentUser
+                };
+                const post = await db.getPostById(postId);
+                res.render('editPost', {user, post, errors: errors.array()});
+            } else {
+                const {title, content} = req.body;
+                await db.editPost(postId, title, content);
+                res.redirect('/');
+            }
+        })
+    ],
+
+    deletePost: asyncHandler(async (req, res) => {
+        const postId = req.params.id;
+        await db.deletePost(postId);
+        res.redirect('/');
+    })
 
 }
 
