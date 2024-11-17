@@ -35,7 +35,10 @@ const postController = {
         asyncHandler(async (req, res) => {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                res.render('createPost', {errors: errors.array()});
+                const user = {
+                    ...res.locals.currentUser
+                };
+                res.render('createPost', {user, errors: errors.array()});
             } else {
                 const {title, content} = req.body;
                 const userId = res.locals.currentUser.id;
