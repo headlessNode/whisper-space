@@ -4,7 +4,7 @@ const loginController = require('../controllers/loginController.js');
 
 loginRouter.get('/', (req, res) => {
     if(req.isAuthenticated()) {
-        res.render('login', {user: res.locals.currentUser, isAuthenticated: true});
+        res.render('login', {user: res.locals.currentUser});
     } else {
         loginController.renderForm(req, res);
     }

@@ -44,8 +44,17 @@ const findUserById = asyncHandler(async (id) => {
     return rows[0];
 });
 
-const getPosts = asyncHandler(async (isMember) => {
-    console.log(isMember);
+const getPosts = asyncHandler(async () => {
+    const {rows} = await pool.query(
+        'SELECT * FROM posts ORDER BY created_at DESC'
+    );
+    return rows;
+});
+
+const createPost = asyncHandler(async (title, content, userId) => {
+    await pool.query(
+        'INSERT INTO posts (title, content, user_id) VALUES ($1, $2, $3)', [title, content, userId]
+    );
 });
 
 module.exports = {
@@ -53,5 +62,6 @@ module.exports = {
     registerUser,
     findUser,
     findUserById,
-    getPosts
+    getPosts,
+    createPost
 };
