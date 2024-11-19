@@ -76,6 +76,12 @@ const editPost = asyncHandler(async (id, title, content) => {
     );
 });
 
+const addMembership = asyncHandler(async (id) => {
+    await pool.query(
+        'UPDATE users SET is_member = true WHERE id = $1', [id]
+    );
+});
+
 module.exports = {
     filterUsername,
     registerUser,
@@ -85,5 +91,6 @@ module.exports = {
     getPostById,
     createPost,
     editPost,
-    deletePost
+    deletePost,
+    addMembership
 };

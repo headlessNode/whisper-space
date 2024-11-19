@@ -8,6 +8,7 @@ const indexRouter = require('./routes/indexRouter.js');
 const loginRouter = require('./routes/loginRouter.js');
 const registerRouter = require('./routes/registerRouter.js');
 const postRouter = require('./routes/postRouter.js');
+const membershipRouter = require('./routes/membershipRouter.js');
 const customErrors = require('./errors/CustomErrors.js');
 const db = require('./db/query.js');
 const pool = require('./db/pool.js');
@@ -85,7 +86,8 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/post', postRouter);
-app.post('/logout', (req, res) => {
+app.use('/membership', membershipRouter);
+app.get('/logout', (req, res) => {
     req.logOut((err) => {
         if (err) {
             return next(err);

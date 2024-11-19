@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>WhisperSpace - Membership</title>
+        <link rel="stylesheet" href="/output.css">
+    </head>
+    <body>
+        <wrapper class="w-full flex flex-col items-center">
+            <%- include('partials/header') %>
+            <main class="px-4 py-20 w-full max-w-7xl flex flex-col items-center justify-center">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold mb-4">Become a Member</h1>
+                    <p class="text-gray-600 max-w-md mx-auto">
+                        Solve the riddle to unlock your membership.
+                    </p>
+                </div>
+                <% if(locals.errors || locals.sessionErrors ) { %>
+                    <div class="w-full max-w-[400px] mb-8 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        <%- include('partials/authErrors') %>
+                    </div>
+                <% } %>
+                <div class="border border-black px-8 pt-12 pb-6 rounded-md flex flex-col w-full max-w-[400px]">
+                    <div class="mb-6 bg-gray-100 p-4 rounded-md">
+                        <p class="text-gray-800 font-semibold">
+                            I speak without a mouth and hear without ears.
+                            I have no body, but I <br> come alive with wind.
+                            If you look at <br> me backward, I might help you understand what I am.
+                        </p>
+                    </div>
+                    <form action="/membership" method="post" class="w-full max-w-[400px] flex flex-col gap-2">
+                        <input class="p-2 rounded-md border border-gray-300" type="text" id="secret_answer" name="secret_answer" placeholder="Answer">
+                        <input type="submit" class="mt-5 cursor-pointer p-2 rounded-md bg-black text-white hover:bg-black/80" value="Login">
+                    </form>
+                </div>
+            </main>
+        </wrapper>
+    </body>
+</html>

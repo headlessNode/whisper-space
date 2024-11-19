@@ -7,7 +7,10 @@ const indexController = {
                 ...res.locals.currentUser
             };
             const posts = await db.getPosts();
-            res.render('index', {user, posts});
+            const postCreators = await Promise.all(
+                posts.map(async (post) => await db.findUserById(post.user_id))
+              );
+            res.render('index', {user, posts, postCreators});
     }),
 };
 

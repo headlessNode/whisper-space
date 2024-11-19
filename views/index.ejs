@@ -15,14 +15,15 @@
                         <h1 class="text-3xl md:text-4xl font-bold text-gray-900">
                             Welcome, <%= locals.user.first_name %> <%= locals.user.last_name %>
                         </h1>
+                        <a href="/logout" class="px-4 py-2 bg-black text-white rounded-md hover:bg-black/80">Logout</a>
                         <div class="w-20 h-1 bg-blue-500 rounded-full"></div>
                     </div>
                     <div class="feed space-y-8 flex flex-col max-w-4xl mx-auto w-full">
                         <% if(locals.posts.length > 0) { %>
-                            <% locals.posts.forEach(post => { %>
-                                <div class="post bg-white p-6 md:p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+                            <% locals.posts.forEach( (post, idx) => { %>
+                                <div class="post bg-white p-6 md:p-8 rounded-xl shadow-sm group hover:shadow-md transition-all duration-300 border border-gray-100">
                                     <article class="space-y-4">
-                                        <h2 class="text-xl md:text-2xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
+                                        <h2 class="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
                                             <%= post.title %>
                                         </h2>
                                         <p class="text-md md:text-lg text-gray-700 leading-relaxed">
@@ -35,7 +36,7 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                     </svg>
                                                     <% if(locals.user.is_member || locals.user.id === post.user_id) { %>
-                                                        <time class="text-gray-500" id="createdAt" data-created-at="<%= post.created_at %>"></time>
+                                                        <time class="text-gray-500 created-at" id="createdAt" data-created-at="<%= post.created_at %>"></time>
                                                     <% } else { %>
                                                         <a href="/membership" class="text-blue-500 hover:text-blue-700 hover:underline font-medium">
                                                             Membership Required
@@ -47,7 +48,7 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                                     </svg>
                                                     <% if(locals.user.is_member || locals.user.id === post.user_id) { %>
-                                                        <span class="text-gray-500"><%= user.username %></span>
+                                                        <span class="text-gray-500"><%= postCreators[idx].username %></span>
                                                     <% } else { %>
                                                         <a href="/membership" class="text-blue-500 hover:text-blue-700 hover:underline font-medium">
                                                             Membership Required
@@ -93,34 +94,45 @@
     </body>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        const createdAtElement = document.getElementById('createdAt');
-        const createdAt = new Date(createdAtElement.getAttribute('data-created-at'));
-        const now = new Date();
-        const diffInMs = now - createdAt;
-        const diffInSecs = Math.floor(diffInMs / 1000);
-        const diffInMins = Math.floor(diffInSecs / 60);
-        const diffInHours = Math.floor(diffInMins / 60);
-        const diffInDays = Math.floor(diffInHours / 24);
-        const diffInMonths = Math.floor(diffInDays / 30);
-        const diffInYears = Math.floor(diffInDays / 365);
-    
-        let timeAgo = '';
-    
-        if (diffInYears > 0) {
-          timeAgo = diffInYears === 1 ? '1 year ago' : `${diffInYears} years ago`;
-        } else if (diffInMonths > 0) {
-          timeAgo = diffInMonths === 1 ? '1 month ago' : `${diffInMonths} months ago`;
-        } else if (diffInDays > 0) {
-          timeAgo = diffInDays === 1 ? '1 day ago' : `${diffInDays} days ago`;
-        } else if (diffInHours > 0) {
-          timeAgo = diffInHours === 1 ? '1 hour ago' : `${diffInHours} hours ago`;
-        } else if (diffInMins > 0) {
-          timeAgo = diffInMins === 1 ? '1 minute ago' : `${diffInMins} minutes ago`;
-        } else {
-          timeAgo = diffInSecs <= 5 ? 'Just now' : `${diffInSecs} seconds ago`;
+        
+        // FUNCTIONS //
+
+        function updatePostTime(){
+            const createdAtElement = document.querySelectorAll('.created-at');
+            createdAtElement.forEach((element) => {
+                const createdAt = new Date(element.getAttribute('data-created-at'));
+                const now = new Date();
+                const diffInMs = now - createdAt;
+                const diffInSecs = Math.floor(diffInMs / 1000);
+                const diffInMins = Math.floor(diffInSecs / 60);
+                const diffInHours = Math.floor(diffInMins / 60);
+                const diffInDays = Math.floor(diffInHours / 24);
+                const diffInMonths = Math.floor(diffInDays / 30);
+                const diffInYears = Math.floor(diffInDays / 365);
+            
+                let timeAgo = '';
+            
+                if (diffInYears > 0) {
+                timeAgo = diffInYears === 1 ? '1 year ago' : `${diffInYears} years ago`;
+                } else if (diffInMonths > 0) {
+                timeAgo = diffInMonths === 1 ? '1 month ago' : `${diffInMonths} months ago`;
+                } else if (diffInDays > 0) {
+                timeAgo = diffInDays === 1 ? '1 day ago' : `${diffInDays} days ago`;
+                } else if (diffInHours > 0) {
+                timeAgo = diffInHours === 1 ? '1 hour ago' : `${diffInHours} hours ago`;
+                } else if (diffInMins > 0) {
+                timeAgo = diffInMins === 1 ? '1 minute ago' : `${diffInMins} minutes ago`;
+                } else {
+                timeAgo = diffInSecs <= 5 ? 'Just now' : `${diffInSecs} seconds ago`;
+                }
+                element.textContent = timeAgo;
+            });
         }
-    
-        createdAtElement.textContent = timeAgo;
+
+        // FUNCTION CALLS //
+
+        updatePostTime();
+
       });
     </script>
 </html>
