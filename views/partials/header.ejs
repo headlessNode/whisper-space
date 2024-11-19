@@ -1,18 +1,43 @@
 <header class="w-full border-b">
-    <nav class="w-full max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <nav class="w-full max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative">
         <a href="/" class="font-bold text-xl">WhisperSpace</a>
-        <div class="flex items-center gap-6">
+        <button id="mobile-menu-toggle" class="md:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+        <div class="hidden md:flex items-center gap-6">
             <% if (locals.user) { %>
                 <a href="/" class="hover:text-gray-600">Home</a>
                 <a href="/post/create" class="hover:text-gray-600">Create a Post</a>
                 <a href="/membership" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Become a Member</a>
-                </div>
             <% } else { %>
-                <a href="/login" class=" hover:text-gray-600">Login</a>
+                <a href="/login" class="hover:text-gray-600">Login</a>
                 <a href="/register" class="px-4 py-2 bg-black text-white rounded-md hover:bg-black/80">
                     Register
                 </a>
             <% } %>
         </div>
+        <div id="mobile-menu" class="absolute top-full left-0 w-full bg-white border-b md:hidden hidden">
+            <div class="flex flex-col items-center py-4 gap-4">
+                <% if (locals.user) { %>
+                    <a href="/" class="hover:text-gray-600">Home</a>
+                    <a href="/post/create" class="hover:text-gray-600">Create a Post</a>
+                    <a href="/membership" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Become a Member</a>
+                <% } else { %>
+                    <a href="/login" class="hover:text-gray-600">Login</a>
+                    <a href="/register" class="px-4 py-2 bg-black text-white rounded-md hover:bg-black/80">
+                        Register
+                    </a>
+                <% } %>
+            </div>
+        </div>
     </nav>
 </header>
+
+<script>
+document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenu.classList.toggle('hidden');
+});
+</script>
