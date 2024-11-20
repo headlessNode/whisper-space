@@ -32,8 +32,6 @@ const loginController = {
                     if (err) {
                         return next(err);
                     }
-                    console.log(err);
-                    console.log(user);
                     if (!user) {
                         return res.render('login', { sessionErrors: [info.message] });
                     }
