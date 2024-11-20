@@ -8,7 +8,7 @@ WhisperSpace is a web application that lets users anonymously share their though
 - **Membership Access**: Users must solve a riddle to join the club and gain membership status.
 - **Create Posts**: Authenticated members can create posts with a title and body text.
 - **Post Visibility**: Posts are visible to everyone, but only members can see the author's name and the date posted.
-- **User Post Management**: Users with can edit and delete their own posts.
+- **User Post Management**: Users can edit and delete their own posts.
 - **Post Display**: The homepage displays all posts, with author names and timestamps hidden from non-members.
 
 ## Technologies Used
